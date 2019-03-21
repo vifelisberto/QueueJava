@@ -5,18 +5,16 @@ import java.util.NoSuchElementException;
 public class Fila implements TADFila {
 
     private final int vetor[];
-    private int inicio;
-    private int fim;
+    private int inicio, fim;
 
     public Fila(int tamanho) {
         vetor = new int[tamanho];
-        inicio = -1;
-        fim = -1;
+        inicio = fim = -1;
     }
 
     @Override
     public boolean isEmpty() {
-        return inicio == -1 && fim == -1;
+        return inicio == -1;
     }
 
     public boolean isFull() {
@@ -30,26 +28,24 @@ public class Fila implements TADFila {
 
     @Override
     public void enqueue(int elemento) {
-        if (!isEmpty()) {
-            fim++;
-            vetor[++inicio] = elemento;
-        } else if (!isFull())
+        if (!isFull()) {
             vetor[++fim] = elemento;
+            if (inicio == -1)
+                inicio++;
+        }
     }
 
     @Override
     public int dequeue() throws NoSuchElementException {
         if (!isEmpty())
-            if (inicio == fim) {
-                inicio = -1;
-                fim = -1;
-            } else {
+            if (inicio == fim)
+                inicio = fim = -1;
+            else {
                 int retorno = vetor[inicio];
-             
-                for (int i = 0; i < size(); i++) {
+
+                for (int i = inicio; i < fim; i++)
                     vetor[i] = vetor[i + 1];
-                }
-                
+
                 fim--;
                 return retorno;
             }
