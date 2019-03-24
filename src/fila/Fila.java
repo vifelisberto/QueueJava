@@ -36,6 +36,7 @@ public class Fila implements TADFila {
     }
 
     @Override
+    // O(n)
     public int dequeue() throws NoSuchElementException {
         if (!isEmpty())
             if (inicio == fim)
